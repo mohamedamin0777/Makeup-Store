@@ -5,30 +5,36 @@
 }
 <h1>Available Products</h1><br />
 
-<a asp-action="AddProduct" class="btn btn-success">
+<a asp-action="AddProduct" class="btn btn-success mb-3">
     Add New Product <i class="bi bi-plus-circle-dotted"></i>
 </a>
+<a asp-action="UpdateProduct" class="btn btn-info mb-3">
+    Update Product <i class="bi bi-plus-circle-dotted"></i>
+</a>
+<br />
 @if (Model?.Count() > 0)
 {
+        <div class="row w-75">
     @foreach (var item in Model)
     {
-        <div class="row w-75">
             <div class="col-4 align-content-center">
                 <div class="card">
-                    <div class="card-img d-block">
-                        <img src="~/Files/Images/@item.PictureUrl" class="card-img-top mx-auto" alt="...">
-                    </div>
+                    <div class="card-img">
+                        <img src="~/Files/Images/@item.PictureUrl" class="w-100" style="height:300px" alt="@Html.DisplayFor(x  => item.Name)">
+                    </div>                    
                     <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(x => item.Name)</h5>
+                        <h5 class="card-title">@Html.DisplayFor(x  => item.Name)</h5>
                         <p class="card-text">@Html.DisplayFor(x => item.Description)</p>
                         <a href="#" class="btn btn-primary">Buy Now</a>
+                        <a class="btn btn-warning btn-sm" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id"> Delete</a>
                     </div>
                 </div>
             </div>
 
 
-         </div>
 
     }
+         </div>
 
 }

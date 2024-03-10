@@ -18,7 +18,7 @@ namespace MakeupStore.PL.Models
         [Required]
         public decimal Price { get; set; }
         public string? PictureUrl { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public int ProductCategoryId { get; set; }
         public int ProductBrandId { get; set; }
     }

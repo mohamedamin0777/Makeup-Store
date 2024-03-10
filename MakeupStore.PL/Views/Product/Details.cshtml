@@ -1,0 +1,48 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Details";
+    var categories = new SelectList(ViewBag.categories, "Id", "Name");
+    var brands = new SelectList(ViewBag.brands, "Id", "Name");
+
+
+}
+<div class="row mb-3">
+    <div class="col-12">
+        <form asp-action="Details" asp-controller="Product">
+            <div class="form-group has-danger">
+                <label asp-for="@Model.Name" class="col-form-label"></label>
+                <input asp-for="@Model.Name" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.ProductBrandId" class="form-label mt-4"> Brand </label>
+                <select asp-for="@Model.ProductBrandId" class="form-select" asp-items="brands" disabled>
+                    <option>--- Select Brand ---</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ProductCategoryId" class="form-label mt-4"> Category </label>
+                <select asp-for="@Model.ProductCategoryId" class="form-select" asp-items="categories" disabled>
+                    <option>--- Select category ---</option>
+                </select>
+            </div>
+            <div class="form-group has-danger">
+                <label asp-for="@Model.PictureUrl" class="col-form-label">@Model.Name's Image</label>
+                <br />
+                <img src="~/Files/Images/@Model.PictureUrl" class="img-circle" width="200" alt="@Model.Name's Image" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Description" class="col-form-label"></label>
+                <input asp-for="@Model.Description" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Price" class="col-form-label"></label>
+                <input asp-for="@Model.Price" class="form-control" readonly />
+            </div>
+            <br />
+            <a class="btn btn-success" asp-controller="Product" asp-action="Update" asp-route-id="@Model.Id">Edit</a> |
+            <a class="btn btn-light" asp-controller="Product" asp-action="Index" asp-route-id="@Model.Id">Back To List</a>
+
+        </form>
+    </div>
+</div>
