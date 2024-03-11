@@ -6,7 +6,7 @@ namespace MakeupStore.BLL.Interfaces
     {
         IEnumerable<ProductBrand> GetProductsByBrand(int? id);
         IEnumerable<ProductCategory> GetProductsByCategory(int? id);
-        IEnumerable<Product> Search(string name);
+        public IEnumerable<Product> Search(string name);
 
     }
 }

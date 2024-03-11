@@ -9,6 +9,8 @@ namespace MakeupStore.PL.Mapper
         public MappingProfile()
         {
             CreateMap<ProductViewModel, Product>().ReverseMap();
+            CreateMap<ProductCategoryViewModel, ProductCategory>().ReverseMap();
+            CreateMap<BrandViewModel, ProductBrand>().ReverseMap();
         }
     }
 }

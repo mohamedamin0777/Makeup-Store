@@ -19,7 +19,6 @@ namespace MakeupStore.BLL.Repositories
             => (IEnumerable<ProductCategory>)_context.Products.Where(p => p.ProductCategoryId == id);
 
         public IEnumerable<Product> Search(string name)
-            => _context.Products.Where(p => p.Name.Trim().ToLower().Contains(name.Trim().ToLower()));
-
+            => _context.Products.Where(p => p.Name.Trim().ToLower().Contains(name.Trim().ToLower())); 
     }
 }

@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "AddCategory";
+}
+
+<div class="row">
+    <div class="cal-6">
+        <form asp-action="AddCategory" asp-controller="Category">
+            <partial name="PartialViews/CreateUpdatePartialView" />
+            <input type="submit" value="Add" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
