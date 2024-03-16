@@ -1,9 +1,10 @@
 ﻿using MakeupStore.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MakeupStore.DAL.Context
 {
-    public class MakeupStoreDbContext : DbContext
+    public class MakeupStoreDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public MakeupStoreDbContext(DbContextOptions<MakeupStoreDbContext> options) : base(options)
         {
