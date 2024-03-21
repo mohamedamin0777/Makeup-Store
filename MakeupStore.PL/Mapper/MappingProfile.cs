@@ -11,6 +11,8 @@ namespace MakeupStore.PL.Mapper
             CreateMap<ProductViewModel, Product>().ReverseMap();
             CreateMap<ProductCategoryViewModel, ProductCategory>().ReverseMap();
             CreateMap<BrandViewModel, ProductBrand>().ReverseMap();
+            CreateMap<OrderViewModel, Order>().ReverseMap();
+            CreateMap<OrderDetailsViewModel, Order>().ReverseMap();
         }
     }
 }

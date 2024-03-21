@@ -28,6 +28,7 @@ namespace MakeupStore.PL
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IGenericRepository<ProductBrand>, GenericRepository<ProductBrand>>();
             builder.Services.AddScoped<IGenericRepository<ProductCategory>, GenericRepository<ProductCategory>>();
+            builder.Services.AddScoped<IGenericRepository<Order>, GenericRepository<Order>>();
            
             builder.Services.AddAutoMapper(map => map.AddProfile(new MappingProfile()));
             

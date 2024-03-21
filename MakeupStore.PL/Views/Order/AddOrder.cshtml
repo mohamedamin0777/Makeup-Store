@@ -1,0 +1,45 @@
+﻿@model OrderViewModel
+@{
+    var categories = new SelectList(ViewBag.categories, "Id", "Name");
+    var brands = new SelectList(ViewBag.brands, "Id", "Name");
+}
+@{
+    ViewData["Title"] = "OrderNow";
+}
+
+
+
+<div class="row mb-3">
+    <div class="col-8">
+        <form asp-action="AddOrder" asp-controller="Order" enctype="multipart/form-data" asp-route-id="">
+            <div class="form-group">
+                <label asp-for="@Model.Quantity" class="form-label mt-4"></label>
+                <input type="number" asp-for="@Model.Quantity" class="form-control">
+                <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber" class="form-label mt-4"></label>
+                <input type="text" asp-for="@Model.PhoneNumber" class="form-control">
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.BuyerEmail" class="form-label mt-4">Email</label>
+                <input type="text" asp-for="@Model.BuyerEmail" class="form-control">
+                <span asp-validation-for="@Model.BuyerEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.ShippingAddress" class="form-label mt-4"></label>
+                <input type="text" asp-for="@Model.ShippingAddress" class="form-control">
+                <span asp-validation-for="@Model.ShippingAddress" class="text-danger"></span>
+            </div>
+            <br />
+            <input type="Submit" value="Add" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-light">Back To List</a>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

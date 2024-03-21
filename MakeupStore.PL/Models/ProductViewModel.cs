@@ -1,6 +1,4 @@
-﻿using MakeupStore.DAL.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MakeupStore.PL.Models
 {
@@ -10,7 +8,6 @@ namespace MakeupStore.PL.Models
 
         [Required]
         [MaxLength(50)]
-        [MinLength(10)]
         public string Name { get; set; }
 
         public string Description { get; set; }

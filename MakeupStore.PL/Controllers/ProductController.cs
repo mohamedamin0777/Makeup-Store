@@ -148,10 +148,9 @@ namespace MakeupStore.PL.Controllers
 
             _repository.Delete(product);
 
-            var productVM = _mapper.Map<ProductViewModel>(product);
+            //var productVM = _mapper.Map<ProductViewModel>(product);
 
             return RedirectToAction("Index");
         }
     }
-
 }
