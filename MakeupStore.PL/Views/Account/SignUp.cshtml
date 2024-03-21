@@ -9,6 +9,9 @@
             <input asp-for="@Model.Email" class="text email" placeholder="Email" required="" />
             <span asp-validation-for="@Model.Email" class="text-danger"></span>
 
+            <input asp-for="@Model.Username" class="text" placeholder="User Name" required="" />
+            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+
             <input asp-for="@Model.Password" class="text" type="password" placeholder="Password" required="" />
             <span asp-validation-for="@Model.Password" class="text-danger"></span>
 

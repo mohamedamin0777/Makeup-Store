@@ -4,6 +4,7 @@ using MakeupStore.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeupStore.DAL.Migrations
 {
     [DbContext(typeof(MakeupStoreDbContext))]
-    partial class MakeupStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240321213736_convertfromDateTimeiffsetToDateOnly")]
+    partial class convertfromDateTimeiffsetToDateOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

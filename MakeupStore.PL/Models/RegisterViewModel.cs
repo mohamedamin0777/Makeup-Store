@@ -8,6 +8,9 @@ namespace MakeupStore.PL.Models
         [EmailAddress(ErrorMessage = "Invalid Email Format")]
         public string? Email { get; set; }
         [Required]
+        [MinLength(6)]
+        public string Username { get; set; }
+        [Required]
         [MinLength(6, ErrorMessage = "Password must be at least 6 charachters Containing Numbers, UpperCase and LowerCase Charachters and at least one NonAlphaNumeric charchter like' @,#,$' ")]
         public string? Password { get; set; }
         [Required]

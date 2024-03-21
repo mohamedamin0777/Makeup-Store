@@ -3,10 +3,12 @@ using MakeupStore.BLL.Interfaces;
 using MakeupStore.DAL.Entities;
 using MakeupStore.PL.Helper;
 using MakeupStore.PL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MakeupStore.PL.Controllers
 {
+    [Authorize(Roles = "Admin , Normal User")]
     public class ProductController : Controller
     {
         private readonly IMapper _mapper;
@@ -37,7 +39,7 @@ namespace MakeupStore.PL.Controllers
 
             return View(mappedProducts);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult AddProduct()
         {
             ViewBag.categories = _categoryRepo.GetAll();
@@ -46,6 +48,7 @@ namespace MakeupStore.PL.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddProduct(ProductViewModel productVM) 
         {
@@ -94,6 +97,8 @@ namespace MakeupStore.PL.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Update(int? id)
         {
             if (id is null)
@@ -110,6 +115,7 @@ namespace MakeupStore.PL.Controllers
 
             return View(productVM);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Update(int id, ProductViewModel productVM)
         {
@@ -136,6 +142,7 @@ namespace MakeupStore.PL.Controllers
             }
             return View(productVM);
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int? id)
         {
             if (id is null)

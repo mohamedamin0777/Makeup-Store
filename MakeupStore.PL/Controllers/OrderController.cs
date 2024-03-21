@@ -2,7 +2,9 @@
 using MakeupStore.BLL.Interfaces;
 using MakeupStore.DAL.Entities;
 using MakeupStore.PL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace MakeupStore.PL.Controllers
 {
@@ -13,47 +15,76 @@ namespace MakeupStore.PL.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IGenericRepository<ProductCategory> _categoryRepo;
         private readonly IGenericRepository<ProductBrand> _brandRepo;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderController(IMapper mapper, IGenericRepository<Order> order, IProductRepository productRepository, IGenericRepository<ProductCategory> categoryRepo, IGenericRepository<ProductBrand> brandRepo)
+        public OrderController(IMapper mapper, UserManager<ApplicationUser> userManager, IGenericRepository<Order> order, IProductRepository productRepository, IGenericRepository<ProductCategory> categoryRepo, IGenericRepository<ProductBrand> brandRepo)
         {
             _mapper = mapper;
             _orderRepository = order;
             _productRepository = productRepository;
             _categoryRepo = categoryRepo;
             _brandRepo = brandRepo;
+            _userManager = userManager;    
         }
 
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Order> orders;
+            IEnumerable<OrderDetailsViewModel> mappedOrders;
+            string username = User.Identity.Name;
+             orders = _orderRepository.GetAll().Where(o => o.Username == username);   
+             mappedOrders = _mapper.Map<IEnumerable<OrderDetailsViewModel>>(orders);
+            
+            foreach (var order in mappedOrders)
+            {
+                order.ProductName = _productRepository.GetById(order.ProductId).Name;
+            }
+
+            return View(mappedOrders);
         }
 
         public IActionResult AddOrder(int? id)
         {
-            if (id is null)
-                return RedirectToAction("Error", "Home");
-
             var product = _productRepository.GetById(id);
-            ViewBag.categories = _categoryRepo.GetAll();
-            ViewBag.brands = _brandRepo.GetAll();
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var orderVM = new OrderViewModel
+            {
+                ProductId = product.Id,
+                Quantity = 1,
+                Username = User.Identity.Name,
+            };
 
-            if (product is null)
-                return RedirectToAction("Error", "Home");
-
-            return View();
+            return View(orderVM);
         }
-
         [HttpPost]
         public IActionResult AddOrder(OrderViewModel orderVM)
         {
-            if(ModelState.IsValid)
+            var productToOrder = _productRepository.GetById(orderVM.ProductId);
+
+            if (productToOrder == null)
             {
-                orderVM.SubTotal = ((_productRepository.GetById(orderVM.ProductId)).Price)*((orderVM.Quantity));
-                var order = _mapper.Map<Order>(orderVM);
-                _orderRepository.Add(order);
+                ModelState.AddModelError("ProductId", "Invalid ProductId");
             }
-            return RedirectToAction(nameof(Index));
+
+            if (ModelState.IsValid)
+            {
+                orderVM.SubTotal = productToOrder.Price * orderVM.Quantity;
+                orderVM.TotalPrice = orderVM.SubTotal + orderVM.ShippingPrice;
+                orderVM.Username = User.Identity.Name;
+                orderVM.DeliveryDate = orderVM.OrderDate.AddDays(3);
+
+                var order = _mapper.Map<Order>(orderVM);
+
+                _orderRepository.Add(order);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(orderVM);
         }
 
         public IActionResult Delete(int? id)

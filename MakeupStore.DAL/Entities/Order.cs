@@ -10,13 +10,14 @@ namespace MakeupStore.DAL.Entities
 
         [EmailAddress]
         public string BuyerEmail { get; set; }
+        public string Username { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
-        public DateTimeOffset DeliveryDate() => OrderDate.AddDays(3);
+        public DateOnly OrderDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+        public DateOnly DeliveryDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(3));
         public string ShippingAddress { get; set; }
         public decimal ShippingPrice { get; set; } = 20;
         public decimal SubTotal { get; set; } 
-        public decimal TotalPrice()
-                    => SubTotal + ShippingPrice;
+        public decimal TotalPrice { get; set; }
     }
 }

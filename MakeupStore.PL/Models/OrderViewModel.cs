@@ -17,8 +17,14 @@ namespace MakeupStore.PL.Models
 
         [Required]
         public string BuyerEmail { get; set;}
+        public string Username { get; set;}
 
         public decimal SubTotal { get; set; }
+        public decimal ShippingPrice { get; set; } = 20;
+        public decimal TotalPrice { get; set; }
+        public DateOnly OrderDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+        public DateOnly DeliveryDate { get; set; }
         public int ProductId { get; set; }
 
     }

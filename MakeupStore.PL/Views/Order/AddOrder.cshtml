@@ -1,9 +1,5 @@
 ﻿@model OrderViewModel
 @{
-    var categories = new SelectList(ViewBag.categories, "Id", "Name");
-    var brands = new SelectList(ViewBag.brands, "Id", "Name");
-}
-@{
     ViewData["Title"] = "OrderNow";
 }
 
@@ -12,6 +8,9 @@
 <div class="row mb-3">
     <div class="col-8">
         <form asp-action="AddOrder" asp-controller="Order" enctype="multipart/form-data" asp-route-id="">
+            <input type="hidden" name="ProductId" value="@Model.ProductId" />
+            <input type="hidden" name="Username" value="@Model.Username" />
+
             <div class="form-group">
                 <label asp-for="@Model.Quantity" class="form-label mt-4"></label>
                 <input type="number" asp-for="@Model.Quantity" class="form-control">

@@ -30,10 +30,9 @@ namespace MakeupStore.PL.Controllers
                 var User = new ApplicationUser
                 {
                     Email = registerVM.Email,
-                    UserName = registerVM.Email.Split('@')[0],
+                    UserName = registerVM.Username,
                     IsAgree = registerVM.IsAgree
                 };
-
                 var result = await _userManager.CreateAsync(User, registerVM.Password);
                 await _userManager.AddToRoleAsync(User, "Normal User");
                 if (result.Succeeded)

@@ -2,10 +2,13 @@
 using MakeupStore.BLL.Interfaces;
 using MakeupStore.DAL.Entities;
 using MakeupStore.PL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MakeupStore.PL.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepo;
