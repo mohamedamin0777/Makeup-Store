@@ -2,13 +2,16 @@
 using MakeupStore.BLL.Interfaces;
 using MakeupStore.DAL.Entities;
 using MakeupStore.PL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace MakeupStore.PL.Controllers
 {
-    public class OrderController : Controller
+	[Authorize(Roles = "Admin , Normal User")]
+
+	public class OrderController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Order> _orderRepository;
