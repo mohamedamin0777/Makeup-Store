@@ -93,9 +93,12 @@ namespace MakeupStore.PL.Controllers
                 return RedirectToAction("Error", "Home");
 
             var category = _categoryRepo.GetById(id);
+
+			if (category is null)
+				return RedirectToAction("Error", "Home");
+			
             var mappedCategory = _mapper.Map<ProductCategoryViewModel>(category);
-            if (category is null)
-                return RedirectToAction("Error", "Home");
+            
 
             return View(mappedCategory);
         }
