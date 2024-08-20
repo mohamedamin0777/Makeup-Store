@@ -10,6 +10,8 @@
           <partial name="PartialViews/AddUpdatePartialView" />
 
           <div class="form-group has-danger">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
                 <label asp-for="@Model.PictureUrl" class="col-form-label">@Model.Name's Image</label>
                 <br />
                 <img src="~/Files/Images/@Model.PictureUrl" class="img-circle" width="200" alt="@Model.Name's Image" />

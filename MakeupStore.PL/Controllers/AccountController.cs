@@ -85,70 +85,70 @@ namespace MakeupStore.PL.Controllers
         #endregion
 
         #region ForgetPassword
-        public IActionResult ForgetPassword()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordVM)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(forgetPasswordVM.Email);
-                if (user != null)
-                {
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        //public IActionResult ForgetPassword()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel forgetPasswordVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await _userManager.FindByEmailAsync(forgetPasswordVM.Email);
+        //        if (user != null)
+        //        {
+        //            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                    var resetpasswordLink = Url.Action("ResetPassword", "Account", new { forgetPasswordVM.Email, Token = token }, Request.Scheme);
+        //            var resetpasswordLink = Url.Action("ResetPassword", "Account", new { forgetPasswordVM.Email, Token = token }, Request.Scheme);
 
-                    var email = new Email
-                    {
-                        Title = "Reset Password",
-                        Body = resetpasswordLink,
-                        To = forgetPasswordVM.Email
-                    };
+        //            var email = new Email
+        //            {
+        //                Title = "Reset Password",
+        //                Body = resetpasswordLink,
+        //                To = forgetPasswordVM.Email
+        //            };
 
-                    EmailSettings.SendEmail(email);
+        //            EmailSettings.SendEmail(email);
 
-                    return RedirectToAction("CompeleteFogetpassword");
-                }
-                ModelState.AddModelError("", "Email Does't Exist ");
-            }
-            return View(forgetPasswordVM);
-        }
-        public IActionResult CompeleteFogetpassword()
-        {
-            return View();
-        }
-        #endregion
+        //            return RedirectToAction("CompeleteFogetpassword");
+        //        }
+        //        ModelState.AddModelError("", "Email Does't Exist ");
+        //    }
+        //    return View(forgetPasswordVM);
+        //}
+        //public IActionResult CompeleteFogetpassword()
+        //{
+        //    return View();
+        //}
+        //#endregion
 
-        #region ResetPassword
-        public IActionResult ResetPassword(string email, string token)
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewMode resetPasswordVM)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(resetPasswordVM.Email);
+        //#region ResetPassword
+        //public IActionResult ResetPassword(string email, string token)
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> ResetPassword(ResetPasswordViewMode resetPasswordVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await _userManager.FindByEmailAsync(resetPasswordVM.Email);
 
-                if (user != null)
-                {
-                    var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Token, resetPasswordVM.Password);
-                    if (result.Succeeded)
-                        return RedirectToAction("LogIn", "Account");
+        //        if (user != null)
+        //        {
+        //            var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Token, resetPasswordVM.Password);
+        //            if (result.Succeeded)
+        //                return RedirectToAction("LogIn", "Account");
 
-                    else
-                        ModelState.AddModelError("", "Password must be at least 6 charachters Containing Numbers, UpperCase  and LowerCase Charachters and at least one NonAlphaNumeric charchter like' @,#,$'");
+        //            else
+        //                ModelState.AddModelError("", "Password must be at least 6 charachters Containing Numbers, UpperCase  and LowerCase Charachters and at least one NonAlphaNumeric charchter like' @,#,$'");
 
 
-                }
-            }
+        //        }
+        //    }
 
-            return View(resetPasswordVM);
-        }
+        //    return View(resetPasswordVM);
+        //}
 
         #endregion
 

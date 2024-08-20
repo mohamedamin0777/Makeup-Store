@@ -18,26 +18,34 @@ namespace MakeupStore.PL.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IGenericRepository<ProductCategory> _categoryRepo;
         private readonly IGenericRepository<ProductBrand> _brandRepo;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderController(IMapper mapper, UserManager<ApplicationUser> userManager, IGenericRepository<Order> order, IProductRepository productRepository, IGenericRepository<ProductCategory> categoryRepo, IGenericRepository<ProductBrand> brandRepo)
+        public OrderController(IMapper mapper, UserManager<ApplicationUser> userManager, IGenericRepository<Order> order, IProductRepository productRepository, IGenericRepository<ProductCategory> categoryRepo, IGenericRepository<ProductBrand> brandRepo, SignInManager<ApplicationUser> signInManager)
         {
             _mapper = mapper;
             _orderRepository = order;
             _productRepository = productRepository;
             _categoryRepo = categoryRepo;
             _brandRepo = brandRepo;
+            _signInManager = signInManager;
             _userManager = userManager;    
         }
-
 
         public IActionResult Index()
         {
             IEnumerable<Order> orders;
             IEnumerable<OrderDetailsViewModel> mappedOrders;
             string username = User.Identity.Name;
-             orders = _orderRepository.GetAll().Where(o => o.Username == username);   
-             mappedOrders = _mapper.Map<IEnumerable<OrderDetailsViewModel>>(orders);
+            if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                orders = _orderRepository.GetAll();
+            }
+            else /*if(_signInManager.IsSignedIn(User) && User.IsInRole("Normal User"))*/
+            {
+                orders = _orderRepository.GetAll().Where(o => o.Username == username);
+            }
+            mappedOrders = _mapper.Map<IEnumerable<OrderDetailsViewModel>>(orders);
             
             foreach (var order in mappedOrders)
             {
